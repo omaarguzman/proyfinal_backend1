@@ -1,4 +1,21 @@
-<h1>Productos en tiempo real</h1>
+<h1>Agregar productos en tiempo real</h1>
+<br />
+
+<div>
+    <form action="/views/realTimeProducts" method="post">
+        <label for="name">Nombre</label>
+        <input type="text" id="name" name="name">
+        <br />
+        <label for="price">Precio</label>
+        <input type="text" id="price" name="price">
+        <br />
+        <label for="description">Descripción</label>
+        <input type="text" id="description" name="description">
+        <br />
+        <button type="submit">Enviar</button>
+    </form>
+</div>        
+<br />
 
 <div>
     <h2>Configuración de los productos y lista actualizada en tiempo real</h2><br>
@@ -9,20 +26,6 @@
             <li>{{this.name}}, {{this.price}}, {{this.description}}</li>
         {{/each}}
     </ul>
-</div>
-
-<div>
-    <form action="/realTimeProducts" method="post">
-        <input type="text" id="firstName" name="firstName">
-        <br />
-        <input type="text" id="lastName" name="lastName">
-        <br />
-        <input type="text" id="email" name="email">
-        <br />
-        <input type="password" id="password" name="password">
-        <br />
-        <button type="submit">Enviar</button>
-    </form>
 </div>
 
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
