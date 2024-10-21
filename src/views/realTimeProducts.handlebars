@@ -1,3 +1,5 @@
+<link rel="stylesheet" href=" https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.min.css">
+
 <h1>Agregar productos en tiempo real</h1>
 <br />
 
@@ -12,7 +14,7 @@
         <label for="description">Descripción</label>
         <input type="text" id="description" name="description">
         <br />
-        <button type="submit">Enviar</button>
+        <button type="submit" id="envioform">Enviar</button>
     </form>
 </div>        
 <br />
@@ -29,8 +31,31 @@
 </div>
 
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
-<script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.14.1/dist/sweetalert2.all.min.js"></script>
+<script type = "module">
+
+    const clickBoton = document.getElementById('envioform');
+    
+    const notificacion = text => {
+        Swal.fire({
+            text: text,
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            showCancelButton: false,
+            timer: 3000
+        });
+    };
+
+    clickBoton.addEventListener('click', event => {
+        socketClient.emit('new_product', 'Se agregó un nuevo producto');
+    });
+
     const socketClient = io();
 
     socketClient.emit('first-message', 'Hola ya estoy conectado.');
+
+    socketClient.on('nuevo_producto', data => {
+        notificacion('Nuevo producto agregado');
+    });
 </script>

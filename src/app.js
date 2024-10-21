@@ -20,6 +20,10 @@ socketServer.on('connection', socket => {
   socket.on('first-message', message => {
     console.log(`Mensaje del cliente ${socket.id}: ${message}`);
   });
+
+  socket.on('new_product', data => {
+    socketServer.emit('nuevo_producto', 'Nuevo producto agregado');
+  });
 });
 
 app.use(express.json());
