@@ -1,0 +1,33 @@
+<h1>Productos en tiempo real</h1>
+
+<div>
+    <h2>Configuración de los productos y lista actualizada en tiempo real</h2><br>
+
+    <h3>{{name}}</h3>
+    <ul>
+        {{#each Products}}
+            <li>{{this.name}}, {{this.price}}, {{this.description}}</li>
+        {{/each}}
+    </ul>
+</div>
+
+<div>
+    <form action="/realTimeProducts" method="post">
+        <input type="text" id="firstName" name="firstName">
+        <br />
+        <input type="text" id="lastName" name="lastName">
+        <br />
+        <input type="text" id="email" name="email">
+        <br />
+        <input type="password" id="password" name="password">
+        <br />
+        <button type="submit">Enviar</button>
+    </form>
+</div>
+
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<script>
+    const socketClient = io();
+
+    socketClient.emit('first-message', 'Hola ya estoy conectado.');
+</script>
