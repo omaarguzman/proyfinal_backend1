@@ -10,3 +10,5 @@ const config = {
     PRODUCTS_COLLECTION: 'products',
     ITEMS_PER_PAGE: 10
 };
+
+export default config;

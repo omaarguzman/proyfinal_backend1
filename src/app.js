@@ -1,6 +1,5 @@
 import express from 'express';
 import handlebars from 'express-handlebars';
-import initSocket from './sockets.js';
 import mongoose from 'mongoose';
 import productsRouter from './routes/products.router.js';
 import viewsRouter from './routes/views.router.js';
@@ -11,9 +10,6 @@ const app = express();
 
 const httpServer = app.listen(config.PORT, async () => {
     await mongoose.connect(config.MONGODB_URI);
-    
-    const socketServer = initSocket(httpServer);
-    app.set('socketServer', socketServer);
 
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
