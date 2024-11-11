@@ -1,38 +1,30 @@
 import express from 'express';
-import config from './config.js'
 import handlebars from 'express-handlebars';
+import initSocket from './sockets.js';
+import mongoose from 'mongoose';
 import productsRouter from './routes/products.router.js';
 import viewsRouter from './routes/views.router.js';
-import { Server } from 'socket.io';
+import config from './config.js';
+
 
 const app = express();
 
-const HttpServer = app.listen(config.PORT, () => {
-  console.log(`Servidor activo en puerto ${config.PORT}`);
+const httpServer = app.listen(config.PORT, async () => {
+    await mongoose.connect(config.MONGODB_URI);
+    
+    const socketServer = initSocket(httpServer);
+    app.set('socketServer', socketServer);
+
+    app.use(express.json());
+    app.use(express.urlencoded({ extended: true }));
+
+    app.engine('handlebars', handlebars.engine());
+    app.set('views', `${config.DIRNAME}/views`);
+    app.set('view engine', 'handlebars');
+
+    app.use('/views', viewsRouter);
+    app.use('/api/products', productsRouter);
+    app.use('/static', express.static(`${config.DIRNAME}/public`));
+    
+    console.log(`Server activo en puerto ${config.PORT} conectado a bbdd`);
 });
-
-const socketServer = new Server(HttpServer);
-app.set('socketServer', socketServer);
-
-socketServer.on('connection', socket => {
-  console.log(`Nuevo cliente conectado con id ${socket.id}`);
-
-  socket.on('first-message', message => {
-    console.log(`Mensaje del cliente ${socket.id}: ${message}`);
-  });
-
-  socket.on('new_product', data => {
-    socketServer.emit('nuevo_producto', 'Nuevo producto agregado');
-  });
-});
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.engine('handlebars', handlebars.engine());
-app.set('views', `${config.DIRNAME}/views`);
-app.set('view engine', 'handlebars');
-
-app.use('/productos', productsRouter);
-app.use('/views', viewsRouter);
-

@@ -1,0 +1,11 @@
+<div>
+    <h1><b>TIENDA DE PRODUCTOS</b></h1>
+    <h2><b>Products</b></h2>
+    
+    <h3>Pg {{products.page}} / {{products.totalPages}} (sig -> {{products.nextPage}})</h3>
+    <ul class="list-group">
+        {{#each products.docs}}
+            <li class="list-group-item">{{this.id}} -> {{this.name}} ({{this.price}}): {{this.quantity}}</li>
+        {{/each}}
+    </ul>
+</div>
