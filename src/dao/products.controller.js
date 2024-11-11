@@ -13,9 +13,9 @@ class ProductController {
         }
     }
 
-    getPaginated = async (pg) => {
+    getPaginated = async (pag) => {
         try {
-            return await productModel.paginate({}, { limit: config.ITEMS_PER_PAGE, page: pg, lean: true });
+            return await productModel.paginate({}, { limit: config.PRODS_PAGE, page: pag, lean: true });
         } catch (err) {
             return err.message;
         }
